@@ -22,6 +22,10 @@ func (p *Progress) Advance() {
 	p.bar.Add(1)
 }
 
+func (p *Progress) Add(n int) {
+	p.bar.Add(n)
+}
+
 func (p *Progress) Finish() {
 	p.bar.Finish()
 }

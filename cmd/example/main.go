@@ -35,6 +35,10 @@ func main() {
 		&WorkerStopCommand{},
 		&WorkerStatusCommand{},
 		&WorkerRestartCommand{},
+		&EventDemoCommand{},
+		&QueueDemoCommand{},
+		&SchedulerDemoCommand{},
+		&DownloadCommand{},
 	)
 
 	if err := app.Run(); err != nil {
