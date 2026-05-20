@@ -5,7 +5,7 @@ A Go framework for building beautiful console applications with minimal boilerpl
 ## Installation
 
 ```bash
-go get github.com/user/go-consolekit
+go get github.com/memran/go-consolekit
 ```
 
 ## Quick Start
