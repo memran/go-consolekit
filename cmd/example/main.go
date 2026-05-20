@@ -12,6 +12,7 @@ func main() {
 	app = console.New("example").
 		Version("1.0.0").
 		Description("ConsoleKit example application").
+		Renderer(console.NewTUIRenderer()).
 		EnableDaemon().
 		PIDFile("storage/app.pid").
 		LogFile("storage/app.log")
@@ -20,6 +21,7 @@ func main() {
 		&InstallCommand{},
 		&MakeModelCommand{},
 		&HelloCommand{},
+		&TuiDemoCommand{},
 		&ProgressDemoCommand{},
 		&TableDemoCommand{},
 		&InputDemoCommand{},

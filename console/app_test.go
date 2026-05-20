@@ -452,21 +452,6 @@ func TestRendererTitle(t *testing.T) {
 	r.Title("Test")
 }
 
-func TestTUIRendererPlaceholder(t *testing.T) {
-	r := NewTUIRenderer()
-	defer func() {
-		if err := recover(); err != nil {
-			t.Fatalf("TUIRenderer panicked: %v", err)
-		}
-	}()
-	r.Line("test")
-	r.Info("test")
-	r.Success("test")
-	r.Warning("test")
-	r.Error("test")
-	r.Title("test")
-}
-
 type testCommand struct {
 	name string
 }

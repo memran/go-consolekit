@@ -159,25 +159,70 @@ go run ./cmd/example progress demo
 go run ./cmd/example input demo
 ```
 
+## TUI Renderer
+
+Switch from CLI to a full-screen TUI by setting a renderer:
+
+```go
+app := console.New("myapp").
+    Renderer(console.NewTUIRenderer()).
+    Version("1.0.0")
+
+app.Command("demo").
+    Handle(func(ctx *console.Context) error {
+        ctx.Title("Dashboard")
+        ctx.Success("All systems go")
+        ctx.Warning("Disk space low")
+        ctx.Info("5 jobs running")
+        ctx.Error("1 failed job")
+        return nil
+    })
+
+app.Run()
+```
+
+The TUI renderer (Bubble Tea) launches on first output call, uses the alternate
+screen buffer, and stays open after the command finishes. Navigate with
+`↑`/`↓`/`j`/`k`, jump with `g`/`G`, quit with `q` or `Ctrl+C`.
+
+```go
+// Run the existing TUI demo:
+go run ./cmd/example tui demo Emran
+```
+
+## Running Examples
+
+```bash
+go run ./cmd/example hello Emran
+go run ./cmd/example install blog --db postgres
+go run ./cmd/example make model User --table users
+go run ./cmd/example tui demo Emran
+go run ./cmd/example table demo
+go run ./cmd/example progress demo
+go run ./cmd/example input demo
+```
+
 ## Architecture
 
 ```
 consolekit/
-├── cmd/example/main.go   # Example commands
-├── console/
-│   ├── app.go            # App entry point, Cobra adapter
-│   ├── command.go        # Command interface, CommandBuilder
-│   ├── registry.go       # Command registry
-│   ├── config.go         # CommandConfig, ArgumentConfig, OptionConfig
-│   ├── context.go        # Execution context
-│   ├── input.go          # Fluent input API (Ask, Confirm, Select, Secret)
-│   ├── output.go         # Output rendering, text builder
-│   ├── renderer.go       # Renderer interface, CLIRenderer, TUIRenderer
-│   ├── progress.go       # Progress bar
-│   ├── spinner.go        # Spinner
-│   ├── table.go          # Table builder
-│   ├── errors.go         # Error types
-│   └── app_test.go       # Unit tests
+├── cmd/example/           # Example commands (13 files)
+├── console/               # Library (52 files, all package console)
+│   ├── app.go             # App entry point, Cobra adapter
+│   ├── command.go         # Command interface, CommandBuilder
+│   ├── registry.go        # Command registry
+│   ├── config.go          # CommandConfig, ArgumentConfig, OptionConfig
+│   ├── context.go         # Execution context
+│   ├── input.go           # Fluent input API (Ask, Confirm, Select, Secret)
+│   ├── output.go          # Output rendering, text builder
+│   ├── renderer.go        # Renderer interface, CLIRenderer, TUIRenderer
+│   ├── tui_model.go       # Bubble Tea TUI model
+│   ├── progress.go        # Progress bar
+│   ├── spinner.go         # Spinner
+│   ├── table.go           # Table builder
+│   ├── errors.go          # Error types
+│   └── *_{test,other}.go  # Tests, utilities, subsystems
+├── docs/                  # Package documentation (20 files)
 ├── go.mod
 └── README.md
 ```
@@ -185,7 +230,7 @@ consolekit/
 ## Roadmap
 
 - [x] CLI renderer
-- [ ] Bubble Tea-based TUI renderer
+- [x] Bubble Tea-based TUI renderer
 - [ ] Command autocompletion
 - [ ] Event system
 - [ ] Plugin support

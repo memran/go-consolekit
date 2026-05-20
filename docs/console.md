@@ -14,6 +14,7 @@ func (a *App) Version(version string) *App
 func (a *App) Description(description string) *App
 func (a *App) Register(commands ...Command) *App
 func (a *App) Command(name string) *CommandBuilder
+func (a *App) Renderer(r Renderer) *App
 func (a *App) EnableDaemon() *App
 func (a *App) PIDFile(path string) *App
 func (a *App) LogFile(path string) *App
@@ -186,7 +187,7 @@ type Renderer interface {
 ```
 
 - `CLIRenderer` (default) - Color output via `fatih/color`
-- `TUIRenderer` - Plain text prefix output
+- `TUIRenderer` - Bubble Tea full-screen TUI with scrollable output, set via `app.Renderer(NewTUIRenderer())`. Lazy-starts on first output call. `Stop()` and `Wait()` for lifecycle control.
 
 ## TextBuilder
 

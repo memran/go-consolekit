@@ -66,6 +66,11 @@ func (a *App) registerBuilder(b *CommandBuilder) {
 	a.registry.Add(cmd)
 }
 
+func (a *App) Renderer(r Renderer) *App {
+	a.renderer = r
+	return a
+}
+
 func (a *App) EnableDaemon() *App {
 	a.daemonEnabled = true
 	return a
@@ -219,6 +224,21 @@ func (a *App) Run() error {
 
 	select {
 	case <-cmdDone:
+		if w, ok := a.renderer.(interface{ Wait() error }); ok {
+			done := make(chan struct{}, 1)
+			go func() {
+				w.Wait()
+				done <- struct{}{}
+			}()
+			select {
+			case <-done:
+			case <-sigChan:
+				if s, ok := a.renderer.(interface{ Stop() }); ok {
+					s.Stop()
+				}
+				<-done
+			}
+		}
 		return cmdErr
 	case <-sigChan:
 		a.renderer.Warning("Received interrupt. Shutting down gracefully (press again to force)...")

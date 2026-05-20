@@ -6,6 +6,10 @@ A Go CLI framework with utilities for building console applications.
 
 - **App Framework** - Build CLI apps with commands, arguments, options, and subcommands using `App`, `CommandBuilder`, `Registry`, and `Context`
 - **Daemon Mode** - Run commands as background daemons with PID files, log redirection, and graceful shutdown
+- **TUI Renderer** - Full-screen Bubble Tea terminal UI with scrollable styled output, set via `app.Renderer(NewTUIRenderer())`
+- **Event Bus** - Priority-based pub/sub with wildcard patterns, async emission, and panic recovery
+- **Task Queue** - File-based queue with configurable concurrency, retry, and scheduled tasks
+- **Scheduler** - File-based cron scheduler (`@daily`, `@hourly`, duration expressions) that pushes tasks to the Queue
 - **String Utilities** (`Str`) - Fluent string manipulation: case conversion, substring, padding, slug, masking, pattern matching
 - **Array Utilities** (`Arr`) - Slice operations: pluck, flatten, collapse, chunk, unique, wrap
 - **Collections** (`Collection`) - Map, filter, reduce, sort, group, aggregate with fluent API
